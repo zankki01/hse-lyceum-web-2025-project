@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Пользователи - Блог{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>👥 Все пользователи</h1>
+    
+    <div class="actions">
+        <a href="/users/create" class="btn btn-success">➕ Создать пользователя</a>
+        <a href="/" class="btn">← На главную</a>
+    </div>
+    
+    {% if users %}
+        <div class="user-list" style="margin-top: 2rem;">
+            {% for user in users %}
+            <div class="card user-item">
+                <div>
+                    <h3 style="margin: 0 0 0.5rem 0;">{{ user.login }}</h3>
+                    <p style="margin: 0; color: #666;">{{ user.email }}</p>
+                    <small>Создан: {{ user.createdAt[:10] }} | Обновлен: {{ user.updatedAt[:10] }}</small>
+                </div>
+                <div class="actions">
+                    <a href="/users/{{ user.id }}/edit" class="btn">✏️ Редактировать</a>
+                    <form method="post" action="/users/{{ user.id }}/delete" style="display:inline;">
+                        <button type="submit" class="btn btn-danger" 
+                                onclick="return confirm('Удалить пользователя {{ user.login }}?')">🗑️ Удалить</button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p style="text-align: center; padding: 2rem; color: #666;">
+            Пока нет пользователей. <a href="/users/create">Создайте первого!</a>
+        </p>
+    {% endif %}
+</div>
+{% endblock %}

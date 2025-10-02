@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Редактировать {{ user.login }} - Блог{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>✏️ Редактировать пользователя</h1>
+    
+    <form method="post" action="/users/{{ user.id }}/edit">
+        <div class="form-group">
+            <label for="login">Логин:</label>
+            <input type="text" id="login" name="login" value="{{ user.login }}" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" value="{{ user.email }}" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="password">Пароль:</label>
+            <input type="password" id="password" name="password" value="{{ user.password }}" required>
+        </div>
+        
+        <div class="actions">
+            <button type="submit" class="btn btn-success">Сохранить изменения</button>
+            <a href="/users/{{ user.id }}" class="btn">Отмена</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

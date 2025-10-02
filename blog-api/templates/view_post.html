@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}{{ post.title }} - Блог{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>{{ post.title }}</h1>
+    
+    <div class="post-meta">
+        <strong>Автор:</strong> {{ author.login if author else 'Неизвестен' }} 
+        | <strong>Создан:</strong> {{ post.createdAt[:10] }}
+        {% if post.updatedAt != post.createdAt %}
+        | <strong>Обновлен:</strong> {{ post.updatedAt[:10] }}
+        {% endif %}
+    </div>
+    
+    <div style="margin: 2rem 0; line-height: 1.8;">
+        {{ post.content|replace('\n', '<br>')|safe }}
+    </div>
+    
+    <div class="actions">
+        <a href="/posts/{{ post.id }}/edit" class="btn">✏️ Редактировать</a>
+        <form method="post" action="/posts/{{ post.id }}/delete" style="display:inline;">
+            <button type="submit" class="btn btn-danger" 
+                    onclick="return confirm('Удалить этот пост?')">🗑️ Удалить</button>
+        </form>
+        <a href="/" class="btn">← Назад к постам</a>
+    </div>
+</div>
+{% endblock %}

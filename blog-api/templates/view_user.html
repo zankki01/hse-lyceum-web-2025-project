@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}Пользователь {{ user.login }} - Блог{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>👤 Профиль пользователя</h1>
+    
+    <div class="user-info" style="margin-bottom: 2rem;">
+        <h2>{{ user.login }}</h2>
+        <p><strong>Email:</strong> {{ user.email }}</p>
+        <p><strong>Дата регистрации:</strong> {{ user.createdAt[:10] }}</p>
+        <p><strong>Последнее обновление:</strong> {{ user.updatedAt[:10] }}</p>
+    </div>
+    
+    <div class="actions">
+        <a href="/users/{{ user.id }}/edit" class="btn">✏️ Редактировать</a>
+        <form method="post" action="/users/{{ user.id }}/delete" style="display:inline;">
+            <button type="submit" class="btn btn-danger" 
+                    onclick="return confirm('Удалить пользователя {{ user.login }}?')">🗑️ Удалить</button>
+        </form>
+        <a href="/users" class="btn">← К списку пользователей</a>
+    </div>
+</div>
+
+<!-- Посты этого пользователя -->
+<div class="card">
+    <h2>📖 Посты пользователя</h2>
+    
+    {% set user_posts = [] %}
+    {% for post in posts %}
+        {% if post.author_id == user.id %}
+            {% set _ = user_posts.append(post) %}
+        {% endif %}
+    {% endfor %}
+    
+    {% if user_posts %}
+        <div class="post-list">
+            {% for post in user_posts %}
+            <div class="card post-item">
+                <h3 class="post-title">
+                    <a href="/posts/{{ post.id }}">{{ post.title }}</a>
+                </h3>
+                <p>{{ post.content[:100] }}{% if post.content|length > 100 %}...{% endif %}</p>
+                <div class="actions">
+                    <a href="/posts/{{ post.id }}" class="btn">Читать</a>
+                    <a href="/posts/{{ post.id }}/edit" class="btn">Редактировать</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>У этого пользователя пока нет постов.</p>
+    {% endif %}
+</div>
+{% endblock %}

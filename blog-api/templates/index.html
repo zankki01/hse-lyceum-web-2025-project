@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}Главная - Блог{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>Welcome to Behelit</h1>
+    
+    <div class="actions">
+        <a href="/posts/create" class="btn btn-success">📝 Создать пост</a>
+        <a href="/users/create" class="btn">👤 Создать пользователя</a>
+    </div>
+</div>
+
+<div class="card">
+    <h2>📖 Все посты</h2>
+    
+    {% if posts %}
+        <div class="post-list">
+            {% for post in posts %}
+            <div class="card post-item">
+                <h3 class="post-title">
+                    <a href="/posts/{{ post.id }}">{{ post.title }}</a>
+                </h3>
+                <div class="post-meta">
+                    Автор: <strong>{{ post.author_login }}</strong> 
+                    | ID автора: {{ post.author_id }}
+                </div>
+                <p>{{ post.content[:100] }}{% if post.content|length > 100 %}...{% endif %}</p>
+                <div class="actions">
+                    <a href="/posts/{{ post.id }}" class="btn">Читать</a>
+                    <a href="/posts/{{ post.id }}/edit" class="btn">Редактировать</a>
+                    <form method="post" action="/posts/{{ post.id }}/delete" style="display:inline;">
+                        <button type="submit" class="btn btn-danger" 
+                                onclick="return confirm('Удалить этот пост?')">Удалить</button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>Пока нет постов. <a href="/posts/create">Создайте первый!</a></p>
+    {% endif %}
+</div>
+
+<div class="card">
+    <h2>👥 Все пользователи</h2>
+    
+    {% if users %}
+        <div class="user-list">
+            {% for user in users %}
+            <div class="card user-item">
+                <div>
+                    <strong>{{ user.login }}</strong> 
+                    <span style="color: #666;">({{ user.email }})</span>
+                    <br>
+                    <small>Создан: {{ user.createdAt[:10] }}</small>
+                </div>
+                <div class="actions">
+                    <a href="/users/{{ user.id }}/edit" class="btn">Редактировать</a>
+                    <form method="post" action="/users/{{ user.id }}/delete" style="display:inline;">
+                        <button type="submit" class="btn btn-danger" 
+                                onclick="return confirm('Удалить этого пользователя?')">Удалить</button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>Пока нет пользователей. <a href="/users/create">Создайте первого!</a></p>
+    {% endif %}
+</div>
+{% endblock %}

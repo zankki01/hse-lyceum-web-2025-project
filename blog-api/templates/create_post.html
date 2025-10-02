@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Создать пост - Блог{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>📝 Создать новый пост</h1>
+    
+    <form method="post" action="/posts/create">
+        <div class="form-group">
+            <label for="title">Заголовок:</label>
+            <input type="text" id="title" name="title" placeholder="Введите заголовок поста" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="content">Содержание:</label>
+            <textarea id="content" name="content" rows="6" placeholder="Напишите содержание поста..." required></textarea>
+        </div>
+        
+        <div class="form-group">
+            <label for="author_id">Автор:</label>
+            <select id="author_id" name="author_id" required>
+                <option value="" disabled selected>Выберите автора</option>
+                {% for user in users %}
+                    <option value="{{ user.id }}">{{ user.login }} ({{ user.email }})</option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <div class="actions">
+            <button type="submit" class="btn btn-success">Создать пост</button>
+            <a href="/" class="btn">Отмена</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

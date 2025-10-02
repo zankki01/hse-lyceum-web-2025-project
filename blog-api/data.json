@@ -1,0 +1,54 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "login": "zank",
+      "email": "zavenger00@yandex.ru",
+      "password": "1234567890",
+      "createdAt": "2025-10-02T07:14:56.369239",
+      "updatedAt": "2025-10-02T13:23:01.567914"
+    },
+    {
+      "id": 2,
+      "login": "Geralt",
+      "email": "zavenger10@yandex.ru",
+      "password": "1234567",
+      "createdAt": "2025-10-02T07:22:21.942309",
+      "updatedAt": "2025-10-02T13:15:00.825881"
+    },
+    {
+      "id": 3,
+      "login": "yoda",
+      "email": "yoda@gmail.com",
+      "password": "asdfghjkl",
+      "createdAt": "2025-10-02T13:22:46.544954",
+      "updatedAt": "2025-10-02T13:22:46.544958"
+    }
+  ],
+  "posts": [
+    {
+      "id": 1,
+      "title": "goga",
+      "content": "Hellooo",
+      "author_id": 1,
+      "createdAt": "2025-10-02T07:15:17.283280",
+      "updatedAt": "2025-10-02T13:21:46.087958"
+    },
+    {
+      "id": 2,
+      "title": "Essay on English",
+      "content": "Dear Shadi",
+      "author_id": 2,
+      "createdAt": "2025-10-02T13:08:55.268593",
+      "updatedAt": "2025-10-02T13:08:55.268596"
+    },
+    {
+      "id": 3,
+      "title": "GGWP",
+      "content": "B102",
+      "author_id": 1,
+      "createdAt": "2025-10-02T13:22:13.480054",
+      "updatedAt": "2025-10-02T13:22:13.480059"
+    }
+  ]
+}
