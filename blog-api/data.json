@@ -9,14 +9,6 @@
       "updatedAt": "2025-10-02T13:23:01.567914"
     },
     {
-      "id": 2,
-      "login": "Geralt",
-      "email": "zavenger10@yandex.ru",
-      "password": "1234567",
-      "createdAt": "2025-10-02T07:22:21.942309",
-      "updatedAt": "2025-10-02T13:15:00.825881"
-    },
-    {
       "id": 3,
       "login": "yoda",
       "email": "yoda@gmail.com",
@@ -35,20 +27,20 @@
       "updatedAt": "2025-10-02T13:21:46.087958"
     },
     {
-      "id": 2,
-      "title": "Essay on English",
-      "content": "Dear Shadi",
-      "author_id": 2,
-      "createdAt": "2025-10-02T13:08:55.268593",
-      "updatedAt": "2025-10-02T13:08:55.268596"
-    },
-    {
       "id": 3,
       "title": "GGWP",
       "content": "B102",
       "author_id": 1,
       "createdAt": "2025-10-02T13:22:13.480054",
       "updatedAt": "2025-10-02T13:22:13.480059"
+    },
+    {
+      "id": 4,
+      "title": "Wassap",
+      "content": "sap tip",
+      "author_id": 1,
+      "createdAt": "2025-10-16T15:51:46.366589",
+      "updatedAt": "2025-10-16T15:51:46.366593"
     }
   ]
 }

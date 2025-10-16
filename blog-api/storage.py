@@ -1,16 +1,19 @@
 import json
 from datetime import datetime
 from pathlib import Path
-from typing import Optional
+from typing import List, Optional
+
 from pydantic import BaseModel
+
 
 class User(BaseModel):
     id: int
     login: str
-    email: str  
+    email: str
     password: str
     createdAt: str
     updatedAt: str
+
 
 class Post(BaseModel):
     id: int
@@ -20,23 +23,25 @@ class Post(BaseModel):
     createdAt: str
     updatedAt: str
 
+
 def dt_to_str(dt: datetime) -> str:
     return dt.isoformat()
+
 
 class Storage:
     def __init__(self, filename: str = "data.json"):
         self.filename = Path(filename)
-        self.users = []
-        self.posts = []
+        self.users: List[User] = []
+        self.posts: List[Post] = []
         self.user_id_counter = 1
-        self.post_id_counter = 1  
+        self.post_id_counter = 1
         self.load_from_file()
 
     def add_user(self, user_data: dict):
-        user_data['id'] = self.user_id_counter
-        user_data['createdAt'] = dt_to_str(datetime.utcnow())
-        user_data['updatedAt'] = dt_to_str(datetime.utcnow())  
-        user = User(**user_data)  
+        user_data["id"] = self.user_id_counter
+        user_data["createdAt"] = dt_to_str(datetime.utcnow())
+        user_data["updatedAt"] = dt_to_str(datetime.utcnow())
+        user = User(**user_data)
         self.users.append(user)
         self.user_id_counter += 1
         self.save_to_file()
@@ -63,22 +68,23 @@ class Storage:
             return True
         return False
 
-
     def add_post(self, post_data: dict):
         print(f"Received post data: {post_data}")
-        author_id = post_data.get('author_id', None)
+        author_id = post_data.get("author_id", None)
         if author_id is None:
             print("Error: author_id is missing in the post data.")
             raise ValueError("author_id is required")
 
         try:
-            post_data['author_id'] = int(author_id)
+            post_data["author_id"] = int(author_id)
         except ValueError:
             print(f"Error: Invalid author_id '{author_id}'")
-            raise ValueError(f"Invalid author_id '{author_id}', must be an integer.")
-        post_data['id'] = self.post_id_counter
-        post_data['createdAt'] = dt_to_str(datetime.utcnow())  
-        post_data['updatedAt'] = dt_to_str(datetime.utcnow())  
+            raise ValueError(
+                f"Invalid author_id '{author_id}', must be an integer."
+            )
+        post_data["id"] = self.post_id_counter
+        post_data["createdAt"] = dt_to_str(datetime.utcnow())
+        post_data["updatedAt"] = dt_to_str(datetime.utcnow())
         print(f"Post data before creating Post object: {post_data}")
         try:
             post = Post(**post_data)
@@ -88,8 +94,6 @@ class Storage:
         self.posts.append(post)
         self.post_id_counter += 1
         self.save_to_file()
-
-
 
     def get_post(self, post_id: int) -> Optional[Post]:
         return next((p for p in self.posts if p.id == post_id), None)
@@ -119,7 +123,6 @@ class Storage:
     def list_posts(self) -> list:
         return self.posts
 
-
     def save_to_file(self):
         data = {
             "users": [user.dict() for user in self.users],
@@ -131,16 +134,20 @@ class Storage:
     def load_from_file(self):
         if not self.filename.exists() or self.filename.stat().st_size == 0:
             return
-        
+
         try:
             with self.filename.open("r", encoding="utf-8") as f:
                 data = json.load(f)
                 self.users = [User(**user) for user in data.get("users", [])]
                 self.posts = [Post(**post) for post in data.get("posts", [])]
                 if self.users:
-                    self.user_id_counter = max(user.id for user in self.users) + 1
+                    self.user_id_counter = (
+                        max(user.id for user in self.users) + 1
+                    )
                 if self.posts:
-                    self.post_id_counter = max(post.id for post in self.posts) + 1
+                    self.post_id_counter = (
+                        max(post.id for post in self.posts) + 1
+                    )
         except json.JSONDecodeError:
             print("Error: Failed to decode JSON. The file may be corrupted.")
             self.users = []
